@@ -76,3 +76,17 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users', UserController::class);
     });
 });
+
+// Auto-seed data if needed (tambahkan di awal authenticated routes)
+Route::middleware(['auth'])->group(function () {
+    // Auto-seed data on first dashboard access
+    Route::get('/dashboard', function() {
+        // Check and seed if needed
+        if (\App\Models\Planet::count() === 0 || \App\Models\Event::count() === 0) {
+            \Artisan::call('universepedia:seed');
+        }
+        return app(\App\Http\Controllers\DashboardController::class)->index();
+    })->name('dashboard');
+    
+    // ... rest of routes
+});
