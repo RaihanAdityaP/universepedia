@@ -34,25 +34,45 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 
 // Authenticated routes
 Route::middleware(['auth'])->group(function () {
-    // Dashboard
+    // Dashboard - accessible by all authenticated users
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Profile
+    // Profile - accessible by all authenticated users
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     
-    // Planets
-    Route::resource('planets', PlanetController::class);
+    // Planets - Read-only for users, full access for admins
+    Route::get('/planets', [PlanetController::class, 'index'])->name('planets.index');
+    Route::get('/planets/{planet}', [PlanetController::class, 'show'])->name('planets.show');
     
-    // Events
-    Route::resource('events', EventController::class);
+    // Admin-only planet management
+    Route::middleware('admin')->group(function () {
+        Route::get('/planets/create', [PlanetController::class, 'create'])->name('planets.create');
+        Route::post('/planets', [PlanetController::class, 'store'])->name('planets.store');
+        Route::get('/planets/{planet}/edit', [PlanetController::class, 'edit'])->name('planets.edit');
+        Route::put('/planets/{planet}', [PlanetController::class, 'update'])->name('planets.update');
+        Route::delete('/planets/{planet}', [PlanetController::class, 'destroy'])->name('planets.destroy');
+    });
     
-    // Users (Admin only)
+    // Events - Read-only for users, full access for admins
+    Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+    
+    // Admin-only event management
+    Route::middleware('admin')->group(function () {
+        Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+        Route::post('/events', [EventController::class, 'store'])->name('events.store');
+        Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+        Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+        Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    });
+    
+    // Reports - accessible by all authenticated users
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    
+    // Users - Admin only
     Route::middleware('admin')->group(function () {
         Route::resource('users', UserController::class);
     });
-    
-    // Reports
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
