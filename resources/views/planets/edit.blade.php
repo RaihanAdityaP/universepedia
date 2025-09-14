@@ -61,6 +61,16 @@
                         </div>
                         
                         <div class="col-md-6">
+                            <label for="size" class="form-label text-light">Size *</label>
+                            <input type="text" class="form-control @error('size') is-invalid @enderror" 
+                                   id="size" name="size" value="{{ old('size', $planet->size) }}" 
+                                   placeholder="e.g., Large, Medium, Small" required>
+                            @error('size')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="col-md-6">
                             <label for="distance_from_sun" class="form-label text-light">Distance from Sun</label>
                             <input type="text" class="form-control @error('distance_from_sun') is-invalid @enderror" 
                                    id="distance_from_sun" name="distance_from_sun" value="{{ old('distance_from_sun', $planet->distance_from_sun) }}" 
@@ -213,4 +223,40 @@
         </div>
     </div>
 </form>
+
+<style>
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.form-check-input:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.bg-dark {
+    background-color: #212529 !important;
+}
+
+.border-secondary {
+    border-color: #495057 !important;
+}
+</style>
 @endsection

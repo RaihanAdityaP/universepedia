@@ -122,7 +122,7 @@
                                    name="name" 
                                    id="name" 
                                    value="{{ old('name', $user->name) }}" 
-                                   class="form-control bg-dark text-light border-secondary @error('name') is-invalid @enderror" 
+                                   class="form-control @error('name') is-invalid @enderror" 
                                    required
                                    placeholder="Enter full name">
                             @error('name')
@@ -138,7 +138,7 @@
                                    name="email" 
                                    id="email" 
                                    value="{{ old('email', $user->email) }}" 
-                                   class="form-control bg-dark text-light border-secondary @error('email') is-invalid @enderror" 
+                                   class="form-control @error('email') is-invalid @enderror" 
                                    required
                                    placeholder="Enter email address">
                             @error('email')
@@ -152,7 +152,7 @@
                             </label>
                             <select name="role" 
                                     id="role" 
-                                    class="form-select bg-dark text-light border-secondary @error('role') is-invalid @enderror" 
+                                    class="form-select @error('role') is-invalid @enderror" 
                                     required>
                                 <option value="">Select role...</option>
                                 <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>
@@ -246,6 +246,16 @@
 </div>
 
 <style>
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
 .bg-gradient-space {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
@@ -259,6 +269,10 @@
 .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
     color: #6c757d;
+}
+
+.border-space-gold {
+    border-color: #ffc107 !important;
 }
 
 .form-control:focus,

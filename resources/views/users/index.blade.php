@@ -47,7 +47,7 @@
 <!-- Statistics Cards -->
 <div class="row g-4 mb-4">
     <div class="col-md-4">
-        <div class="card space-card">
+        <div class="card space-card stats-card">
             <div class="card-body text-center">
                 <i class="bi bi-people display-6 text-primary mb-2"></i>
                 <h4 class="text-light mb-1">{{ $users->total() }}</h4>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card space-card">
+        <div class="card space-card stats-card">
             <div class="card-body text-center">
                 <i class="bi bi-shield-check display-6 text-warning mb-2"></i>
                 <h4 class="text-light mb-1">{{ $users->where('role', 'admin')->count() }}</h4>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card space-card">
+        <div class="card space-card stats-card">
             <div class="card-body text-center">
                 <i class="bi bi-rocket display-6 text-info mb-2"></i>
                 <h4 class="text-light mb-1">{{ $users->where('role', 'user')->count() }}</h4>
@@ -258,8 +258,31 @@
 </div>
 
 <style>
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.border-space-gold {
+    border-color: #ffc107 !important;
+}
+
 .bg-gradient-space {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stats-card {
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .user-row {

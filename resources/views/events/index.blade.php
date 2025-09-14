@@ -158,7 +158,7 @@
 <div class="row g-4">
     @forelse($events as $event)
         <div class="col-lg-4 col-md-6">
-            <div class="card space-card h-100 event-card">
+            <div class="card space-card h-100 content-card">
                 <div class="position-relative">
                     @if($event->image_url)
                         <img src="{{ $event->image_url }}" class="card-img-top" alt="{{ $event->title }}" style="height: 200px; object-fit: cover;">
@@ -170,7 +170,7 @@
                     
                     <!-- Event Type Badge -->
                     <div class="position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-{{ $event->type_color }} event-type-badge shadow">
+                        <span class="badge bg-{{ $event->type_color }} content-type-badge shadow">
                             {{ ucfirst(str_replace('_', ' ', $event->type)) }}
                         </span>
                     </div>
@@ -291,12 +291,12 @@
                     </div>
                     <div class="modal-body">
                         <p class="mb-3">Are you sure you want to delete <strong>{{ $event->title }}</strong>?</p>
-                        <div class="bg-dark bg-opacity-50 p-3 rounded">
+                        <div class="bg-dark bg-opacity-50 p-3 rounded border border-danger border-opacity-25">
                             <div class="d-flex align-items-center">
                                 @if($event->image_url)
-                                    <img src="{{ $event->image_url }}" class="rounded me-3" width="60" height="60" style="object-fit: cover;">
+                                    <img src="{{ $event->image_url }}" class="rounded me-3 border" width="60" height="60" style="object-fit: cover;">
                                 @else
-                                    <div class="rounded bg-gradient-space d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                                    <div class="rounded bg-gradient-space d-flex align-items-center justify-content-center me-3 border" style="width: 60px; height: 60px;">
                                         <i class="bi bi-calendar-event text-white"></i>
                                     </div>
                                 @endif
@@ -307,7 +307,8 @@
                             </div>
                         </div>
                         <p class="text-danger mt-3 mb-0">
-                            <i class="bi bi-info-circle me-1"></i>This action cannot be undone.
+                            <i class="bi bi-exclamation-triangle me-1"></i>
+                            This action cannot be undone. All event data will be permanently removed.
                         </p>
                     </div>
                     <div class="modal-footer border-top border-secondary">
@@ -380,17 +381,27 @@
     color: #6c757d;
 }
 
-.event-card {
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.content-card {
     transition: all 0.3s ease;
     overflow: hidden;
 }
 
-.event-card:hover {
+.content-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.event-type-badge {
+.content-type-badge {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -417,6 +428,11 @@
 .form-select:focus {
     border-color: #ffc107;
     box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.badge-sm {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
 }
 </style>
 @endsection

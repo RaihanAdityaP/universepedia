@@ -28,38 +28,38 @@
 <!-- Statistics Cards -->
 <div class="row g-4 mb-5">
     <div class="col-md-3">
-        <div class="card stats-card h-100">
+        <div class="card space-card stats-card h-100">
             <div class="card-body text-center">
-                <i class="bi bi-people display-4 mb-3"></i>
-                <h3 class="mb-1">{{ number_format($stats['total_users']) }}</h3>
-                <p class="mb-0 opacity-75">Space Explorers</p>
+                <i class="bi bi-people display-4 mb-3 text-primary"></i>
+                <h3 class="mb-1 text-light">{{ number_format($stats['total_users']) }}</h3>
+                <p class="mb-0 opacity-75 text-light">Space Explorers</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card stats-card h-100">
+        <div class="card space-card stats-card h-100">
             <div class="card-body text-center">
-                <i class="bi bi-globe display-4 mb-3"></i>
-                <h3 class="mb-1">{{ number_format($stats['total_planets']) }}</h3>
-                <p class="mb-0 opacity-75">Planets Cataloged</p>
+                <i class="bi bi-globe display-4 mb-3 text-success"></i>
+                <h3 class="mb-1 text-light">{{ number_format($stats['total_planets']) }}</h3>
+                <p class="mb-0 opacity-75 text-light">Planets Cataloged</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card stats-card h-100">
+        <div class="card space-card stats-card h-100">
             <div class="card-body text-center">
-                <i class="bi bi-calendar-event display-4 mb-3"></i>
-                <h3 class="mb-1">{{ number_format($stats['total_events']) }}</h3>
-                <p class="mb-0 opacity-75">Space Events</p>
+                <i class="bi bi-calendar-event display-4 mb-3 text-warning"></i>
+                <h3 class="mb-1 text-light">{{ number_format($stats['total_events']) }}</h3>
+                <p class="mb-0 opacity-75 text-light">Space Events</p>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card stats-card h-100">
+        <div class="card space-card stats-card h-100">
             <div class="card-body text-center">
-                <i class="bi bi-clock display-4 mb-3"></i>
-                <h3 class="mb-1">{{ number_format($stats['past_events']) }}</h3>
-                <p class="mb-0 opacity-75">Past Events</p>
+                <i class="bi bi-clock display-4 mb-3 text-info"></i>
+                <h3 class="mb-1 text-light">{{ number_format($stats['past_events']) }}</h3>
+                <p class="mb-0 opacity-75 text-light">Past Events</p>
             </div>
         </div>
     </div>
@@ -69,8 +69,8 @@
     <!-- Recent/Featured Planets -->
     <div class="col-lg-6">
         <div class="card space-card">
-            <div class="card-header border-0 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
+            <div class="card-header bg-transparent border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-light">
                     <i class="bi bi-globe me-2"></i>Featured Planets
                 </h5>
                 @if(auth()->user()->isAdmin())
@@ -90,7 +90,7 @@
                                         <p class="mb-1 text-light opacity-75 small">{{ Str::limit($planet->description, 60) }}</p>
                                         <small class="text-muted fw-semibold">
                                             <i class="bi bi-rulers me-1"></i>{{ $planet->size }}
-                                            <span class="ms-2"><i class="bi bi-globe me-1"></i>{{ $planet->moons }} moons</span>
+                                            <span class="ms-2"><i class="bi bi-moon me-1"></i>{{ $planet->moons }} moons</span>
                                         </small>
                                     </div>
                                     <div class="text-end ms-2">
@@ -130,8 +130,8 @@
     <!-- Past Events -->
     <div class="col-lg-6">
         <div class="card space-card">
-            <div class="card-header border-0 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
+            <div class="card-header bg-transparent border-bottom border-secondary d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-light">
                     <i class="bi bi-calendar-event me-2"></i>Past Events
                 </h5>
                 @if(auth()->user()->isAdmin())
@@ -224,4 +224,50 @@
     </div>
 </div>
 @endif
+
+<style>
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.stats-card {
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.planet-type-badge {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list-group-item {
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    transform: translateX(3px);
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: #6c757d;
+}
+</style>
 @endsection

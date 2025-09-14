@@ -43,16 +43,20 @@ class PlanetController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'size' => 'required|string',
-            'distance_from_sun' => 'required|string',
+            'distance_from_sun' => 'nullable|string',
+            'diameter' => 'nullable|string',
             'mass' => 'nullable|string',
             'orbital_period' => 'nullable|string',
             'rotation_period' => 'nullable|string',
             'temperature' => 'nullable|string',
             'moons' => 'nullable|integer|min:0',
-            'type' => 'required|string',
+            'type' => 'required|string|in:terrestrial,gas_giant,ice_giant,dwarf_planet,exoplanet,other',
+            'atmosphere' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_habitable' => 'boolean',
         ]);
+
+        $validated['is_habitable'] = $request->has('is_habitable') ? 1 : 0;
+        $validated['has_rings'] = $request->has('has_rings') ? 1 : 0;
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('planets', 'public');
@@ -74,19 +78,22 @@ class PlanetController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'size' => 'required|string',
-            'distance_from_sun' => 'required|string',
+            'distance_from_sun' => 'nullable|string',
+            'diameter' => 'nullable|string',
             'mass' => 'nullable|string',
             'orbital_period' => 'nullable|string',
             'rotation_period' => 'nullable|string',
             'temperature' => 'nullable|string',
             'moons' => 'nullable|integer|min:0',
-            'type' => 'required|string',
+            'type' => 'required|string|in:terrestrial,gas_giant,ice_giant,dwarf_planet,exoplanet,other',
+            'atmosphere' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_habitable' => 'boolean',
         ]);
 
+        $validated['is_habitable'] = $request->has('is_habitable') ? 1 : 0;
+        $validated['has_rings'] = $request->has('has_rings') ? 1 : 0;
+
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($planet->image) {
                 Storage::disk('public')->delete($planet->image);
             }
@@ -100,7 +107,6 @@ class PlanetController extends Controller
 
     public function destroy(Planet $planet)
     {
-        // Delete image
         if ($planet->image) {
             Storage::disk('public')->delete($planet->image);
         }

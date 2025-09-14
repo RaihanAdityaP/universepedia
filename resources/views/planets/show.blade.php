@@ -48,12 +48,17 @@
                 
                 <!-- Overlay badges -->
                 <div class="position-absolute top-0 end-0 m-3">
-                    <span class="badge bg-{{ $planet->type_color }} planet-type-badge shadow me-2">
+                    <span class="badge bg-{{ $planet->type_color }} content-type-badge shadow me-2">
                         {{ ucfirst(str_replace('_', ' ', $planet->type)) }}
                     </span>
                     @if($planet->is_habitable)
                         <span class="badge bg-success shadow">
                             <i class="bi bi-check-circle me-1"></i>Potentially Habitable
+                        </span>
+                    @endif
+                    @if($planet->has_rings)
+                        <span class="badge bg-warning text-dark shadow">
+                            <i class="bi bi-circle me-1"></i>Has Rings
                         </span>
                     @endif
                 </div>
@@ -83,8 +88,17 @@
                                 <span class="text-muted">
                                     <i class="bi bi-arrows-fullscreen me-2"></i>Size
                                 </span>
-                                <span class="text-light fw-semibold">{{ $planet->size }}</span>
+                                <span class="text-light fw-semibold">{{ $planet->size ?? 'Unknown' }}</span>
                             </div>
+                            
+                            @if($planet->diameter)
+                                <div class="info-item d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
+                                    <span class="text-muted">
+                                        <i class="bi bi-circle me-2"></i>Diameter
+                                    </span>
+                                    <span class="text-light fw-semibold">{{ $planet->diameter }}</span>
+                                </div>
+                            @endif
                             
                             @if($planet->mass)
                                 <div class="info-item d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
@@ -104,12 +118,21 @@
                                 </div>
                             @endif
                             
+                            @if($planet->atmosphere)
+                                <div class="info-item d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
+                                    <span class="text-muted">
+                                        <i class="bi bi-cloud me-2"></i>Atmosphere
+                                    </span>
+                                    <span class="text-light fw-semibold">{{ $planet->atmosphere }}</span>
+                                </div>
+                            @endif
+                            
                             <div class="info-item d-flex justify-content-between align-items-center py-2">
                                 <span class="text-muted">
                                     <i class="bi bi-moon me-2"></i>Moons
                                 </span>
                                 <span class="text-light fw-semibold">
-                                    {{ $planet->moons }}
+                                    {{ $planet->moons ?? 0 }}
                                     @if($planet->moons > 0)
                                         <small class="text-space-gold ms-1">natural satellites</small>
                                     @endif
@@ -134,7 +157,7 @@
                                 <span class="text-muted">
                                     <i class="bi bi-sun me-2"></i>Distance from Sun
                                 </span>
-                                <span class="text-light fw-semibold">{{ $planet->distance_from_sun }}</span>
+                                <span class="text-light fw-semibold">{{ $planet->distance_from_sun ?? 'Unknown' }}</span>
                             </div>
                             
                             @if($planet->orbital_period)
@@ -147,13 +170,30 @@
                             @endif
                             
                             @if($planet->rotation_period)
-                                <div class="info-item d-flex justify-content-between align-items-center py-2">
+                                <div class="info-item d-flex justify-content-between align-items-center py-2 border-bottom border-secondary">
                                     <span class="text-muted">
                                         <i class="bi bi-arrow-counterclockwise me-2"></i>Rotation Period
                                     </span>
                                     <span class="text-light fw-semibold">{{ $planet->rotation_period }}</span>
                                 </div>
                             @endif
+                            
+                            <div class="info-item d-flex justify-content-between align-items-center py-2">
+                                <span class="text-muted">
+                                    <i class="bi bi-circle me-2"></i>Ring System
+                                </span>
+                                <span class="text-light fw-semibold">
+                                    @if($planet->has_rings)
+                                        <span class="text-success">
+                                            <i class="bi bi-check-circle me-1"></i>Yes
+                                        </span>
+                                    @else
+                                        <span class="text-muted">
+                                            <i class="bi bi-x-circle me-1"></i>No
+                                        </span>
+                                    @endif
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -174,7 +214,7 @@
                 <div class="row g-3 text-center">
                     <div class="col-6">
                         <div class="stat-box bg-dark bg-opacity-25 rounded p-3 border border-primary border-opacity-25">
-                            <div class="text-primary h4 mb-1">{{ $planet->moons }}</div>
+                            <div class="text-primary h4 mb-1">{{ $planet->moons ?? 0 }}</div>
                             <small class="text-muted">Natural<br>Satellites</small>
                         </div>
                     </div>
@@ -190,13 +230,33 @@
                             <small class="text-muted">Potentially<br>Habitable</small>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="stat-box bg-dark bg-opacity-25 rounded p-3 border border-{{ $planet->has_rings ? 'warning' : 'secondary' }} border-opacity-25">
+                            <div class="text-{{ $planet->has_rings ? 'warning' : 'secondary' }} h4 mb-1">
+                                @if($planet->has_rings)
+                                    <i class="bi bi-circle"></i>
+                                @else
+                                    <i class="bi bi-x-circle"></i>
+                                @endif
+                            </div>
+                            <small class="text-muted">Ring<br>System</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-box bg-dark bg-opacity-25 rounded p-3 border border-info border-opacity-25">
+                            <div class="text-info h4 mb-1">
+                                <i class="bi bi-tag"></i>
+                            </div>
+                            <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $planet->type)) }}<br>Planet</small>
+                        </div>
+                    </div>
                 </div>
                 
                 <hr class="border-secondary my-3">
                 
                 <!-- Planet Type Info -->
                 <div class="text-center mb-3">
-                    <span class="badge bg-{{ $planet->type_color }} planet-type-badge-large">
+                    <span class="badge bg-{{ $planet->type_color }} content-type-badge-large">
                         <i class="bi bi-tag me-1"></i>{{ ucfirst(str_replace('_', ' ', $planet->type)) }}
                     </span>
                 </div>
@@ -274,11 +334,14 @@
                         <div>
                             <h6 class="text-light mb-1">{{ $planet->name }}</h6>
                             <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $planet->type)) }} Planet</small>
-                            @if($planet->is_habitable)
-                                <div class="mt-1">
-                                    <span class="badge bg-success badge-sm">Habitable</span>
-                                </div>
-                            @endif
+                            <div class="mt-1">
+                                @if($planet->is_habitable)
+                                    <span class="badge bg-success badge-sm me-1">Habitable</span>
+                                @endif
+                                @if($planet->has_rings)
+                                    <span class="badge bg-warning text-dark badge-sm">Has Rings</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -320,12 +383,22 @@
     color: #6c757d;
 }
 
-.planet-type-badge {
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.content-type-badge {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.planet-type-badge-large {
+.content-type-badge-large {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     backdrop-filter: blur(10px);

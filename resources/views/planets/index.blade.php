@@ -162,14 +162,19 @@
                         </span>
                     </div>
                     
-                    <!-- Habitable Indicator -->
-                    @if($planet->is_habitable)
-                        <div class="position-absolute top-0 start-0 m-2">
-                            <span class="badge bg-success shadow">
+                    <!-- Status Indicators -->
+                    <div class="position-absolute top-0 start-0 m-2">
+                        @if($planet->is_habitable)
+                            <span class="badge bg-success shadow mb-1 d-block">
                                 <i class="bi bi-check-circle me-1"></i>Habitable
                             </span>
-                        </div>
-                    @endif
+                        @endif
+                        @if($planet->has_rings)
+                            <span class="badge bg-warning text-dark shadow">
+                                <i class="bi bi-circle me-1"></i>Rings
+                            </span>
+                        @endif
+                    </div>
                 </div>
                 
                 <div class="card-body d-flex flex-column">
@@ -186,14 +191,14 @@
                             <div class="info-box bg-dark bg-opacity-25 rounded p-2 text-center">
                                 <i class="bi bi-rulers text-space-gold d-block mb-1"></i>
                                 <small class="text-muted d-block">Distance</small>
-                                <small class="text-light fw-semibold">{{ Str::limit($planet->distance_from_sun, 20) }}</small>
+                                <small class="text-light fw-semibold">{{ Str::limit($planet->distance_from_sun ?? 'Unknown', 20) }}</small>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="info-box bg-dark bg-opacity-25 rounded p-2 text-center">
                                 <i class="bi bi-moon text-space-gold d-block mb-1"></i>
                                 <small class="text-muted d-block">Moons</small>
-                                <small class="text-light fw-semibold">{{ $planet->moons }}</small>
+                                <small class="text-light fw-semibold">{{ $planet->moons ?? 0 }}</small>
                             </div>
                         </div>
                     </div>
@@ -245,6 +250,14 @@
                                 <div>
                                     <h6 class="text-light mb-1">{{ $planet->name }}</h6>
                                     <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $planet->type)) }}</small>
+                                    <div class="mt-1">
+                                        @if($planet->is_habitable)
+                                            <span class="badge bg-success badge-sm me-1">Habitable</span>
+                                        @endif
+                                        @if($planet->has_rings)
+                                            <span class="badge bg-warning text-dark badge-sm">Rings</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -307,6 +320,16 @@
 @endif
 
 <style>
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
 .bg-gradient-space {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
@@ -351,6 +374,11 @@
 .form-select:focus {
     border-color: #ffc107;
     box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.badge-sm {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
 }
 </style>
 @endsection

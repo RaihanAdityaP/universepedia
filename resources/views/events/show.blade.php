@@ -48,7 +48,7 @@
                 
                 <!-- Overlay badges -->
                 <div class="position-absolute top-0 end-0 m-3">
-                    <span class="badge bg-{{ $event->type_color }} event-type-badge shadow me-2">
+                    <span class="badge bg-{{ $event->type_color }} content-type-badge shadow me-2">
                         {{ ucfirst(str_replace('_', ' ', $event->type)) }}
                     </span>
                     @if($event->is_recurring)
@@ -197,7 +197,7 @@
                     <div class="col-6">
                         <div class="stat-box bg-dark bg-opacity-25 rounded p-3 border border-info border-opacity-25">
                             <div class="text-info h4 mb-1">{{ $event->date ? ($event->date->isFuture() ? 'Upcoming' : 'Past') : 'TBA' }}</div>
-                            <small class="text-muted">Event Status</small>
+                            <small class="text-muted">Event<br>Status</small>
                         </div>
                     </div>
                     <div class="col-6">
@@ -209,7 +209,7 @@
                                     <i class="bi bi-x-circle"></i>
                                 @endif
                             </div>
-                            <small class="text-muted">Recurring</small>
+                            <small class="text-muted">Recurring<br>Event</small>
                         </div>
                     </div>
                 </div>
@@ -218,7 +218,7 @@
                 
                 <!-- Event Type Info -->
                 <div class="text-center mb-3">
-                    <span class="badge bg-{{ $event->type_color }} event-type-badge-large">
+                    <span class="badge bg-{{ $event->type_color }} content-type-badge-large">
                         <i class="bi bi-tag me-1"></i>{{ ucfirst(str_replace('_', ' ', $event->type)) }}
                     </span>
                 </div>
@@ -342,12 +342,22 @@
     color: #6c757d;
 }
 
-.event-type-badge {
+.space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.content-type-badge {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.event-type-badge-large {
+.content-type-badge-large {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     backdrop-filter: blur(10px);

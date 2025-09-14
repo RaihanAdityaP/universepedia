@@ -40,7 +40,7 @@
 
     @foreach($statCards as $card)
         <div class="col-md-3">
-            <div class="card space-card h-100 text-center">
+            <div class="card space-card stats-card h-100 text-center">
                 <div class="card-body">
                     <i class="bi {{ $card['icon'] }} display-6 text-{{ $card['color'] }} mb-2"></i>
                     <h4 class="text-light mb-1">{{ $card['value'] }}</h4>
@@ -81,7 +81,10 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="text-muted text-center py-3 fw-medium">No planet data available</p>
+                    <div class="text-center py-4">
+                        <i class="bi bi-globe text-muted display-1 mb-3"></i>
+                        <p class="text-muted fw-medium">No planet data available</p>
+                    </div>
                 @endif
             </div>
         </div>
@@ -113,7 +116,10 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="text-muted text-center py-3 fw-medium">No event data available</p>
+                    <div class="text-center py-4">
+                        <i class="bi bi-calendar-event text-muted display-1 mb-3"></i>
+                        <p class="text-muted fw-medium">No event data available</p>
+                    </div>
                 @endif
             </div>
         </div>
@@ -147,7 +153,12 @@
                                     </div>
                                 </div>
                             @empty
-                                <p class="text-muted small fw-medium">No recent {{ strtolower(str_replace('Recent ', '', $meta['title'])) }}</p>
+                                <div class="d-flex align-items-center justify-content-center py-3">
+                                    <div class="text-center">
+                                        <i class="bi bi-{{ $meta['icon'] }} text-muted mb-2 d-block" style="font-size: 2rem;"></i>
+                                        <p class="text-muted small fw-medium mb-0">No recent {{ strtolower(str_replace('Recent ', '', $meta['title'])) }}</p>
+                                    </div>
+                                </div>
                             @endforelse
                         </div>
                     @endforeach
@@ -159,23 +170,50 @@
 
 <style>
 .space-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.text-space-gold {
+    color: #ffc107;
+}
+
+.stats-card {
     transition: all 0.3s ease;
 }
-.space-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
+
 .bg-gradient-space {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
+
 .breadcrumb {
     background: transparent;
     padding: 0;
     margin: 0;
 }
+
 .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
     color: #6c757d;
+}
+
+.progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
 }
 </style>
 @endsection
