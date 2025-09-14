@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,60 @@
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, var(--space-primary) 0%, var(--space-secondary) 100%);
             min-height: 100vh;
+            font-weight: 500;
+        }
+        
+        /* Enhanced text visibility */
+        .text-light {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+        
+        .text-muted {
+            color: #e0e0e0 !important;
+            font-weight: 500;
+        }
+        
+        .opacity-75 {
+            opacity: 0.9 !important;
+        }
+        
+        /* Form controls enhanced visibility */
+        .form-control {
+            color: #ffffff !important;
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+        }
+        
+        .form-control:focus {
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+        
+        .form-select {
+            color: #ffffff !important;
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .form-select option {
+            background-color: #2c2c54 !important;
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+        
+        .input-group-text {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            color: #ffffff !important;
+            font-weight: 600;
         }
         
         .sidebar {
@@ -51,7 +105,7 @@
         
         .navbar-brand {
             color: var(--space-gold) !important;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.5rem;
         }
         
@@ -60,12 +114,14 @@
             transition: all 0.3s ease;
             border-radius: 8px;
             margin: 2px 0;
+            font-weight: 600;
         }
         
         .nav-link:hover, .nav-link.active {
             background: rgba(255, 255, 255, 0.1);
             color: var(--space-gold) !important;
             transform: translateX(5px);
+            font-weight: 700;
         }
         
         .card {
@@ -75,10 +131,19 @@
             color: white;
         }
         
+        .card-title {
+            font-weight: 700;
+        }
+        
+        .card-text {
+            font-weight: 500;
+        }
+        
         .btn-primary {
             background: var(--space-blue);
             border: none;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
         
         .btn-primary:hover {
@@ -87,13 +152,28 @@
             box-shadow: 0 5px 15px rgba(50, 130, 184, 0.4);
         }
         
+        .btn-outline-light {
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: #ffffff;
+        }
+        
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        
         .alert {
             border: none;
             border-radius: 10px;
+            font-weight: 600;
         }
         
         .table-dark {
             background: rgba(0, 0, 0, 0.3);
+            font-weight: 500;
         }
         
         .space-card {
@@ -110,12 +190,58 @@
         .planet-type-badge {
             font-size: 0.75rem;
             padding: 0.25rem 0.5rem;
+            font-weight: 700;
         }
         
         .stats-card {
             background: linear-gradient(135deg, var(--space-blue) 0%, var(--space-accent) 100%);
             border: none;
             color: white;
+        }
+        
+        .stats-card h3 {
+            font-weight: 800;
+        }
+        
+        .stats-card p {
+            font-weight: 600;
+        }
+        
+        .badge {
+            font-weight: 700;
+        }
+        
+        .list-group-item {
+            font-weight: 500;
+        }
+        
+        .list-group-item h6 {
+            font-weight: 700;
+        }
+        
+        .dropdown-item {
+            font-weight: 600;
+        }
+        
+        /* Additional font weight utilities */
+        .fw-medium {
+            font-weight: 500 !important;
+        }
+        
+        .fw-semibold {
+            font-weight: 600 !important;
+        }
+        
+        .fw-bold {
+            font-weight: 700 !important;
+        }
+        
+        .fw-bolder {
+            font-weight: 800 !important;
+        }
+        
+        .fw-black {
+            font-weight: 900 !important;
         }
         
         @media (max-width: 768px) {
@@ -183,7 +309,7 @@
             <hr>
             
             <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                <a href="#" class="d-flex align-items-center text-light text-decoration-none dropdown-toggle fw-semibold" data-bs-toggle="dropdown">
                     @if(auth()->user()->avatar)
                         <img src="{{ auth()->user()->avatar_url }}" alt="Avatar" width="32" height="32" class="rounded-circle me-2">
                     @else

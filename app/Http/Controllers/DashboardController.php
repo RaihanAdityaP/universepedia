@@ -15,12 +15,12 @@ class DashboardController extends Controller
             'total_users' => User::count(),
             'total_planets' => Planet::count(),
             'total_events' => Event::count(),
-            'upcoming_events' => Event::upcoming()->count(),
+            'past_events' => Event::past()->count(), // Ganti dari upcoming_events ke past_events
         ];
 
         $recent_planets = Planet::latest()->take(5)->get();
-        $upcoming_events = Event::upcoming()->orderBy('date')->take(5)->get();
+        $past_events = Event::past()->orderBy('date', 'desc')->take(5)->get(); // Ganti dari upcoming_events
 
-        return view('dashboard.index', compact('stats', 'recent_planets', 'upcoming_events'));
+        return view('dashboard.index', compact('stats', 'recent_planets', 'past_events'));
     }
 }

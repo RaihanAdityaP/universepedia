@@ -58,8 +58,8 @@
         <div class="card stats-card h-100">
             <div class="card-body text-center">
                 <i class="bi bi-clock display-4 mb-3"></i>
-                <h3 class="mb-1">{{ number_format($stats['upcoming_events']) }}</h3>
-                <p class="mb-0 opacity-75">Upcoming Events</p>
+                <h3 class="mb-1">{{ number_format($stats['past_events']) }}</h3>
+                <p class="mb-0 opacity-75">Past Events</p>
             </div>
         </div>
     </div>
@@ -86,9 +86,9 @@
                             <div class="list-group-item bg-transparent border-secondary">
                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                     <div class="flex-grow-1">
-                                        <h6 class="mb-1 text-light">{{ $planet->name }}</h6>
+                                        <h6 class="mb-1 text-light fw-bold">{{ $planet->name }}</h6>
                                         <p class="mb-1 text-light opacity-75 small">{{ Str::limit($planet->description, 60) }}</p>
-                                        <small class="text-muted">
+                                        <small class="text-muted fw-semibold">
                                             <i class="bi bi-rulers me-1"></i>{{ $planet->size }}
                                             <span class="ms-2"><i class="bi bi-globe me-1"></i>{{ $planet->moons }} moons</span>
                                         </small>
@@ -127,12 +127,12 @@
         </div>
     </div>
     
-    <!-- Upcoming Events -->
+    <!-- Past Events -->
     <div class="col-lg-6">
         <div class="card space-card">
             <div class="card-header border-0 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">
-                    <i class="bi bi-calendar-event me-2"></i>Upcoming Events
+                    <i class="bi bi-calendar-event me-2"></i>Past Events
                 </h5>
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('events.create') }}" class="btn btn-primary btn-sm">
@@ -141,15 +141,15 @@
                 @endif
             </div>
             <div class="card-body">
-                @if($upcoming_events->count() > 0)
+                @if($past_events->count() > 0)
                     <div class="list-group list-group-flush">
-                        @foreach($upcoming_events as $event)
+                        @foreach($past_events as $event)
                             <div class="list-group-item bg-transparent border-secondary">
                                 <div class="d-flex w-100 justify-content-between align-items-start">
                                     <div class="flex-grow-1">
-                                        <h6 class="mb-1 text-light">{{ $event->title }}</h6>
+                                        <h6 class="mb-1 text-light fw-bold">{{ $event->title }}</h6>
                                         <p class="mb-1 text-light opacity-75 small">{{ Str::limit($event->description, 50) }}</p>
-                                        <small class="text-muted">
+                                        <small class="text-muted fw-semibold">
                                             <i class="bi bi-calendar me-1"></i>{{ $event->formatted_date }}
                                             @if($event->time)
                                                 at {{ $event->time->format('g:i A') }}
@@ -161,11 +161,9 @@
                                         <span class="badge bg-{{ $event->type_color }} planet-type-badge mb-2">
                                             {{ ucfirst(str_replace('_', ' ', $event->type)) }}
                                         </span>
-                                        @if($event->days_until >= 0)
-                                            <br><small class="text-space-gold">
-                                                {{ $event->days_until === 0 ? 'Today!' : 'in ' . $event->days_until . ' days' }}
-                                            </small>
-                                        @endif
+                                        <br><small class="text-secondary fw-semibold">
+                                            {{ abs($event->days_until) }} days ago
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -179,13 +177,13 @@
                 @else
                     <div class="text-center py-4">
                         <i class="bi bi-calendar-event text-muted display-1 mb-3"></i>
-                        <p class="text-muted">No upcoming space events scheduled.</p>
+                        <p class="text-muted">No past space events recorded.</p>
                         @if(auth()->user()->isAdmin())
                             <a href="{{ route('events.create') }}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-plus me-1"></i>Add First Event
                             </a>
                         @else
-                            <p class="text-muted small">Stay tuned for amazing astronomical phenomena!</p>
+                            <p class="text-muted small">Check back soon for amazing astronomical records!</p>
                         @endif
                     </div>
                 @endif
@@ -195,7 +193,7 @@
 </div>
 
 <!-- Quick Actions for Users -->
-@if(!auth()->user()->isAdmin() && ($recent_planets->count() > 0 || $upcoming_events->count() > 0))
+@if(!auth()->user()->isAdmin() && ($recent_planets->count() > 0 || $past_events->count() > 0))
 <div class="row g-4 mt-2">
     <div class="col-12">
         <div class="card space-card">
@@ -212,11 +210,11 @@
                             </a>
                         </div>
                     @endif
-                    @if($upcoming_events->count() > 0)
+                    @if($past_events->count() > 0)
                         <div class="col-md-6">
                             <a href="{{ route('events.index') }}" class="btn btn-outline-warning w-100">
                                 <i class="bi bi-calendar-event me-2"></i>Space Events
-                                <small class="d-block mt-1">{{ $stats['upcoming_events'] }} upcoming phenomena</small>
+                                <small class="d-block mt-1">{{ $stats['past_events'] }} recorded phenomena</small>
                             </a>
                         </div>
                     @endif

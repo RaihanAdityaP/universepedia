@@ -46,16 +46,6 @@ class Event extends Model
         };
     }
 
-    public function getFormattedDateAttribute()
-    {
-        return $this->date->format('d M Y');
-    }
-
-    public function getDaysUntilAttribute()
-    {
-        return $this->date->diffInDays(now(), false);
-    }
-
     public function scopeUpcoming($query)
     {
         return $query->where('date', '>=', now()->toDateString());

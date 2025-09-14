@@ -14,7 +14,14 @@ return new class extends Migration
             $table->text('description');
             $table->date('date');
             $table->string('location');
-            $table->enum('type', ['meteor_shower', 'eclipse', 'planet_alignment', 'rocket_launch', 'asteroid_flyby', 'other'])->default('other');
+            $table->enum('type', [
+                'meteor_shower',
+                'eclipse',
+                'planet_alignment',
+                'asteroid_flyby',
+                'supernova',
+                'other'
+            ])->default('other');
             $table->string('visibility')->nullable(); // visible from which regions
             $table->time('time')->nullable();
             $table->string('duration')->nullable();
