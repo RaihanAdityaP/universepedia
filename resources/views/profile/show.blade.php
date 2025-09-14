@@ -90,7 +90,6 @@
                             <p class="text-light mb-0">{{ auth()->user()->name }}</p>
                         </div>
                     </div>
-                    
                     <div class="col-md-6">
                         <div class="info-item p-3 rounded bg-dark bg-opacity-25">
                             <div class="d-flex align-items-center mb-2">
@@ -100,7 +99,6 @@
                             <p class="text-light mb-0">{{ auth()->user()->email }}</p>
                         </div>
                     </div>
-                    
                     <div class="col-md-6">
                         <div class="info-item p-3 rounded bg-dark bg-opacity-25">
                             <div class="d-flex align-items-center mb-2">
@@ -111,7 +109,6 @@
                             <small class="text-muted">{{ auth()->user()->created_at->diffForHumans() }}</small>
                         </div>
                     </div>
-                    
                     <div class="col-md-6">
                         <div class="info-item p-3 rounded bg-dark bg-opacity-25">
                             <div class="d-flex align-items-center mb-2">
@@ -197,25 +194,19 @@
             <div class="card-body">
                 <div class="row g-3">
                     @if(auth()->user()->role === 'admin')
-                        <div class="col-md-3">
-                            <a href="{{ route('events.create') }}" class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
-                                <i class="bi bi-plus-circle mb-2" style="font-size: 2rem;"></i>
-                                <span>Add Event</span>
+                        <div class="col-md-4">
+                            <a href="{{ route('users.index') }}" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                                <i class="bi bi-people mb-2" style="font-size: 2rem;"></i>
+                                <span>Manage Users</span>
                             </a>
                         </div>
-                        <div class="col-md-3">
-                            <a href="{{ route('planets.create') }}" class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
-                                <i class="bi bi-plus-circle mb-2" style="font-size: 2rem;"></i>
-                                <span>Add Planet</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="{{ route('events.index') }}" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                        <div class="col-md-4">
+                            <a href="{{ route('events.index') }}" class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
                                 <i class="bi bi-calendar-event mb-2" style="font-size: 2rem;"></i>
                                 <span>View Events</span>
                             </a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <a href="{{ route('planets.index') }}" class="btn btn-outline-warning w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
                                 <i class="bi bi-globe mb-2" style="font-size: 2rem;"></i>
                                 <span>View Planets</span>
@@ -223,7 +214,7 @@
                         </div>
                     @else
                         <div class="col-md-6">
-                            <a href="{{ route('events.index') }}" class="btn btn-outline-success w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
+                            <a href="{{ route('events.index') }}" class="btn btn-outline-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center py-3">
                                 <i class="bi bi-calendar-event mb-2" style="font-size: 2rem;"></i>
                                 <span>View Events</span>
                             </a>
@@ -257,7 +248,7 @@
 
 .stat-card {
     transition: all 0.3s ease;
-    min-height: 150px; /* Menambahkan minimum height agar semua kotak sama tinggi */
+    min-height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
