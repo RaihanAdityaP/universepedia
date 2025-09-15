@@ -159,7 +159,8 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            <div class="btn-group" role="group">
+                            <!-- FIXED: Removed btn-group yang menyebabkan tombol tidak clickable -->
+                            <div class="d-flex gap-1 justify-content-center">
                                 <a href="{{ route('users.edit', $user->id) }}" 
                                    class="btn btn-outline-primary btn-sm"
                                    title="Edit User">
@@ -167,69 +168,17 @@
                                 </a>
                                 @if($user->id !== auth()->id())
                                     <button type="button" 
-                                            class="btn btn-outline-danger btn-sm" 
+                                            class="btn btn-outline-danger btn-sm delete-user-btn" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#deleteModal{{ $user->id }}"
-                                            title="Delete User">
+                                            title="Delete User"
+                                            style="z-index: 10; position: relative;">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 @endif
                             </div>
                         </td>
                     </tr>
-
-                    <!-- Delete Modal -->
-                    @if($user->id !== auth()->id())
-                    <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content bg-dark text-light border border-danger">
-                                <div class="modal-header border-bottom border-danger">
-                                    <h5 class="modal-title">
-                                        <i class="bi bi-exclamation-triangle text-danger me-2"></i>Confirm Deletion
-                                    </h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="mb-3">Are you sure you want to delete this user?</p>
-                                    <div class="bg-dark bg-opacity-50 p-3 rounded">
-                                        <div class="d-flex align-items-center">
-                                            @if($user->avatar)
-                                                <img src="{{ asset('storage/' . $user->avatar) }}" 
-                                                     class="rounded-circle me-3 border" 
-                                                     width="50" height="50" style="object-fit: cover;">
-                                            @else
-                                                <div class="rounded-circle bg-gradient-space d-flex align-items-center justify-content-center me-3" 
-                                                     style="width: 50px; height: 50px;">
-                                                    <i class="bi bi-person text-white"></i>
-                                                </div>
-                                            @endif
-                                            <div>
-                                                <h6 class="text-light mb-1">{{ $user->name }}</h6>
-                                                <small class="text-muted">{{ $user->email }}</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text-danger mt-3 mb-0">
-                                        <i class="bi bi-info-circle me-1"></i>
-                                        This action cannot be undone.
-                                    </p>
-                                </div>
-                                <div class="modal-footer border-top border-secondary">
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
-                                    </button>
-                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="bi bi-trash me-1"></i>Delete User
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
                     @endforeach
                 </tbody>
             </table>
@@ -256,6 +205,61 @@
     </div>
     @endif
 </div>
+
+<!-- Delete Modals - Moved outside the table -->
+@foreach($users as $user)
+    @if($user->id !== auth()->id())
+    <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light border border-danger">
+                <div class="modal-header border-bottom border-danger">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle text-danger me-2"></i>Confirm Deletion
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-3">Are you sure you want to delete this user?</p>
+                    <div class="bg-dark bg-opacity-50 p-3 rounded">
+                        <div class="d-flex align-items-center">
+                            @if($user->avatar)
+                                <img src="{{ asset('storage/' . $user->avatar) }}" 
+                                     class="rounded-circle me-3 border" 
+                                     width="50" height="50" style="object-fit: cover;">
+                            @else
+                                <div class="rounded-circle bg-gradient-space d-flex align-items-center justify-content-center me-3" 
+                                     style="width: 50px; height: 50px;">
+                                    <i class="bi bi-person text-white"></i>
+                                </div>
+                            @endif
+                            <div>
+                                <h6 class="text-light mb-1">{{ $user->name }}</h6>
+                                <small class="text-muted">{{ $user->email }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-danger mt-3 mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        This action cannot be undone.
+                    </p>
+                </div>
+                <div class="modal-footer border-top border-secondary">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>Delete User
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+@endforeach
 
 <style>
 .space-card {
@@ -294,13 +298,16 @@
     background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-.btn-group .btn {
-    border-radius: 0.375rem !important;
-    margin-right: 0.25rem;
+/* FIXED: Better button styling tanpa btn-group yang bermasalah */
+.delete-user-btn {
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
 
-.btn-group .btn:last-child {
-    margin-right: 0;
+.delete-user-btn:hover {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
 }
 
 .breadcrumb {
@@ -313,5 +320,37 @@
     content: "›";
     color: #6c757d;
 }
+
+/* Ensure buttons are always clickable */
+.btn {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 1;
+}
+
+.table td {
+    position: relative;
+}
 </style>
+
+@push('scripts')
+<script>
+// Additional JavaScript to ensure delete buttons work
+document.addEventListener('DOMContentLoaded', function() {
+    // Force enable all delete buttons
+    document.querySelectorAll('.delete-user-btn').forEach(function(btn) {
+        btn.style.pointerEvents = 'auto';
+        btn.style.cursor = 'pointer';
+        
+        // Add click handler as backup
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log('Delete button clicked for modal:', this.getAttribute('data-bs-target'));
+        });
+    });
+    
+    console.log('Delete buttons initialized:', document.querySelectorAll('.delete-user-btn').length);
+});
+</script>
+@endpush
 @endsection

@@ -349,22 +349,6 @@
     @endforelse
 </div>
 
-<!-- Pagination -->
-@if($events->hasPages())
-    <div class="card space-card mt-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">
-                    Showing {{ $events->firstItem() }} to {{ $events->lastItem() }} of {{ $events->total() }} events
-                </small>
-                <div>
-                    {{ $events->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-
 <style>
 .bg-gradient-space {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

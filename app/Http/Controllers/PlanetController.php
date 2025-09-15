@@ -58,6 +58,16 @@ class PlanetController extends Controller
         $validated['is_habitable'] = $request->has('is_habitable') ? 1 : 0;
         $validated['has_rings'] = $request->has('has_rings') ? 1 : 0;
 
+        // FIXED: Handle nullable fields - berikan default value jika null
+        $validated['distance_from_sun'] = $validated['distance_from_sun'] ?? 'Unknown';
+        $validated['diameter'] = $validated['diameter'] ?? 'Unknown';
+        $validated['mass'] = $validated['mass'] ?? 'Unknown';
+        $validated['orbital_period'] = $validated['orbital_period'] ?? 'Unknown';
+        $validated['rotation_period'] = $validated['rotation_period'] ?? 'Unknown';
+        $validated['temperature'] = $validated['temperature'] ?? 'Unknown';
+        $validated['atmosphere'] = $validated['atmosphere'] ?? 'Unknown';
+        $validated['moons'] = $validated['moons'] ?? 0;
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('planets', 'public');
         }
@@ -92,6 +102,16 @@ class PlanetController extends Controller
 
         $validated['is_habitable'] = $request->has('is_habitable') ? 1 : 0;
         $validated['has_rings'] = $request->has('has_rings') ? 1 : 0;
+
+        // FIXED: Handle nullable fields untuk update juga
+        $validated['distance_from_sun'] = $validated['distance_from_sun'] ?? 'Unknown';
+        $validated['diameter'] = $validated['diameter'] ?? 'Unknown';
+        $validated['mass'] = $validated['mass'] ?? 'Unknown';
+        $validated['orbital_period'] = $validated['orbital_period'] ?? 'Unknown';
+        $validated['rotation_period'] = $validated['rotation_period'] ?? 'Unknown';
+        $validated['temperature'] = $validated['temperature'] ?? 'Unknown';
+        $validated['atmosphere'] = $validated['atmosphere'] ?? 'Unknown';
+        $validated['moons'] = $validated['moons'] ?? 0;
 
         if ($request->hasFile('image')) {
             if ($planet->image) {

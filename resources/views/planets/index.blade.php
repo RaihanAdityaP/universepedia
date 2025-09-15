@@ -303,22 +303,6 @@
     @endforelse
 </div>
 
-<!-- Pagination -->
-@if($planets->hasPages())
-    <div class="card space-card mt-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">
-                    Showing {{ $planets->firstItem() }} to {{ $planets->lastItem() }} of {{ $planets->total() }} planets
-                </small>
-                <div>
-                    {{ $planets->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-
 <style>
 .space-card {
     background: rgba(0, 0, 0, 0.7);
